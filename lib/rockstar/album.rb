@@ -87,6 +87,8 @@ module Rockstar
       @image_small    = @images['small']
 
       @mbid         = (doc).at(:mbid).inner_html
+      
+      {:url => @url, :image_url => @image_medium}
     end
     
     def tracks
