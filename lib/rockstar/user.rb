@@ -128,8 +128,8 @@ module Rockstar
       get_instance("user.getTopArtists", :top_artists, :artist, {:user => @username}, force)
     end
     
-    def top_albums(force=false)
-      get_instance("user.getTopAlbums", :top_albums, :album, {:user => @username}, force)
+    def top_albums(period='overall', force=false)
+      get_instance("user.getTopAlbums", :top_albums, :album, {:user => @username, :period => period}, force)
     end
     
     def top_tracks(force=false)
