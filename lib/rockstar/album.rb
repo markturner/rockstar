@@ -81,6 +81,8 @@ module Rockstar
       (doc/'image').each {|image|
         @images[image['size']] = image.inner_html
       }
+      
+      @track_count = (doc/'track').count
 
       @image_large    = @images['large']
       @image_medium   = @images['medium']
@@ -88,7 +90,7 @@ module Rockstar
 
       @mbid         = (doc).at(:mbid).inner_html
       
-      {:url => @url, :image_url => @image_medium}
+      {:url => @url, :image_url => @image_medium, :large_image_url => @image_large, :track_count => @track_count}
     end
     
     def tracks
