@@ -79,20 +79,27 @@ module Rockstar
       rescue
         @url        = nil
       end
-      @release_date = Base.parse_time((doc).at(:releasedate).inner_html.strip)
 
-      @images = {}
-      (doc/'image').each {|image|
-        @images[image['size']] = image.inner_html
-      }
+      begin
+        @images = {}
+        (doc/'image').each {|image|
+          @images[image['size']] = image.inner_html
+        }
       
-      @track_count = (doc/'track').count
-
-      @image_large    = @images['large']
-      @image_medium   = @images['medium']
-      @image_small    = @images['small']
-
-      @mbid         = (doc).at(:mbid).inner_html
+        @image_large    = @images['large']
+        @image_medium   = @images['medium']
+        @image_small    = @images['small']
+      rescue
+        @image_large    = nil
+        @image_medium   = nil
+        @image_small    = nil
+      end
+        
+      begin
+        @track_count = (doc/'track').count
+      rescue
+        @track_count = 0
+      end
       
       {:url => @url, :image_url => @image_medium, :large_image_url => @image_large, :track_count => @track_count}
     end
