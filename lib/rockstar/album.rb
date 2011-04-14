@@ -73,7 +73,12 @@ module Rockstar
     end
     
     def load_info
-      doc = self.class.fetch_and_parse("album.getInfo", {:artist => @artist, :album => @name})
+      doc           = self.class.fetch_and_parse("album.getInfo", {:artist => @artist, :album =>@name})
+      begin
+        @url        = Base.fix_url((doc).at(:url).inner_html)
+      rescue
+        @url        = nil
+      end
 
       begin
         @images = {}
@@ -96,7 +101,7 @@ module Rockstar
         @track_count = 0
       end
       
-      {:image_url => @image_medium, :large_image_url => @image_large, :track_count => @track_count}
+      {:url => @url, :image_url => @image_medium, :large_image_url => @image_large, :track_count => @track_count}
     end
     
     def tracks
